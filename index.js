@@ -1,4 +1,8 @@
-/* This is to test the git forking Not Found Error */
+/* This is to test the git forking Not Found Error
+npm list -g 
+*/
+
+
 
 const express = require('express');
 const axios = require('axios');
@@ -14,15 +18,24 @@ const PRIVATE_APP_ACCESS = '';
 
 // TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 
-// * Code for Route 1 goes here
+app.get('/', (req, res) => {
+    res.send('Welcome home! ')
+  })
+
+
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
-
-// * Code for Route 2 goes here
+app.get('/update-cobj', (req, res) => {
+    res.send('GET - Update to custom object goes here')
+  })
 
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
 
-// * Code for Route 3 goes here
+
+app.post('/update-cobj', (req, res) => {
+    res.send('POST - Request to the homepage, fill out later')
+  })
+
 
 /** 
 * * This is sample code to give you a reference for how you should structure your calls. 
