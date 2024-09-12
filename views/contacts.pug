@@ -1,5 +1,3 @@
-** This is a sample of a pug template and how it uses the data passed to it from index.js.
-
 doctype html
 html 
     head 
@@ -8,6 +6,7 @@ html
         link(rel="stylesheet", href="/css/style.css")
     body    
         h1 Contacts
+        include includes/nav.pug
         .cards 
             each contact in data
                 .card 
