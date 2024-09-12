@@ -1,0 +1,16 @@
+doctype html
+html 
+    include includes/head.pug
+    
+    body    
+        h1 Contacts
+        h3= `${my_message}`
+        include includes/nav.pug
+
+
+
+        //- .cards 
+        //-     each contact in data
+        //-         .card 
+        //-             h2.card__name #{contact.properties.firstname}  #{contact.properties.lastname}
+        //-             p.card__email #{contact.properties.email}
