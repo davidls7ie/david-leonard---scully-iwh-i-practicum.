@@ -18,35 +18,29 @@ const PRIVATE_APP_ACCESS = process.env.PRIVATE_ACCESS_TOKEN;
 
 // Route 0 - Example code  / Works as expected
 
-app.get('/contacts', async (req, res) => {
-    const contacts = 'https://api.hubspot.com/crm/v3/objects/contacts';
-    const headers = {
-        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
-        'Content-Type': 'application/json'
-    }
-
-    try {
-        const resp = await axios.get(contacts, { headers });
-        const data = resp.data.results;
-        res.render('contacts', { title: 'Contacts | HubSpot APIs', data });      
-    } catch (error) {
-        console.error(error);
-    }
-
-});
 
 // TODO: ROUTE 1 - 
 // Create a new app.get route for the homepage to call your custom object data. 
 // Pass this data along to the front-end and create a new pug template in the views folder.
 
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+  const contacts = 'https://api.hubspot.com/crm/v3/objects/contacts';
+  const headers = {
+      Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+      'Content-Type': 'application/json'
+  }
 
-    res.render('updates', { 
-        title: 'Home | Integrating With HubSpot I Practicum' ,
-        my_message: 'Welcome home',
-    });
-  })
+  try {
+      const resp = await axios.get(contacts, { headers });
+      const data = resp.data.results;
+      res.render('contacts', { title: 'Contacts | HubSpot APIs', data });      
+  } catch (error) {
+      console.error(error);
+  }
+
+});
+
 
 // TODO: ROUTE 2 - 
 // Create a new app.get route for the form to create or update new custom object data. 
@@ -62,13 +56,13 @@ app.get('/update-cobj', (req, res) => {
 
   })
 
-  app.get('/cobject', (req, res) => {
-    res.render('updates', { 
-        title: 'List Objects| Integrating With HubSpot I Practicum' ,
-        my_message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies eros vel dui sagittis convallis. Proin vestibulum sapien sem, et dictum justo ultricies et',
-    });
+  // app.get('/cobject', (req, res) => {
+  //   res.render('updates', { 
+  //       title: 'List Objects| Integrating With HubSpot I Practicum' ,
+  //       my_message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies eros vel dui sagittis convallis. Proin vestibulum sapien sem, et dictum justo ultricies et',
+  //   });
 
-  })
+  // })
 
   https://app.hubspot.com/contacts/<test-account-id>/objects/<custom-object-id>/views/all/list
 

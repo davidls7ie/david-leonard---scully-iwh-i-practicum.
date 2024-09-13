@@ -1,20 +1,19 @@
+doctype html
 html 
     head 
         title= `${title}`
         meta(name="viewport" content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="/css/style.css")
     body    
-        h1 Contacts
-        h3= `${my_message}`
-        include includes/nav.pug
-
-        form.form(action='/add' method='post')
-            label(for='name') First Name:
-                input(type='text' name='firstname' id='firstname' required)
-            label(for='name') Last Name:
-                input(type='text' name='lastname' id='lastname' required)                
-            div
-                label(for='email') Email:
-                    input(type='email' name='email' id='email' required)
-            div
-                button.button(type='submit') Add Contact
+    h1 Homepage
+    include includes/nav.pug
+    form.form(action='/add' method='post')
+        label(for='name') First Name:
+            input(type='text' name='firstname' id='firstname' required)
+        label(for='name') Last Name:
+            input(type='text' name='lastname' id='lastname' required)                
+        div
+            label(for='email') Email:
+                input(type='email' name='email' id='email' required)
+        div
+            button.button(type='submit') Add Contact

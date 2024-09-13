@@ -14,7 +14,7 @@ h1, h2, h3, h4, h5, h6  {
 .cards {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 
@@ -77,3 +77,15 @@ input[type="submit"] {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #fff;
   }
+
+
+/* Custom  Styles */  
+
+p.card__email {
+    margin: 1rem;
+}
+  
+p.card__name {
+    font-weight: 900;
+    margin: 1rem;
+}
