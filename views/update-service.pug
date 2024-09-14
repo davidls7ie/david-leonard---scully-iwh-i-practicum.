@@ -1,0 +1,19 @@
+doctype html
+html 
+    head 
+        title= `${title}`
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body
+        h1 Add a Service (Custom Object)
+        include includes/nav.pug
+        form.form(action='/add-service' method='post')
+            label(for='name') Name
+                input(type='text' name='name' id='name' required)
+            label(for='marketing_service_name') Marketing Service Name
+                input(type='text' name='marketing_service_name' id='marketing_service_name' required)                
+            label(for='description') Description
+                input(type='text' name='description' id='description' required)                
+
+            div
+                button.button(type='submit') Add Service

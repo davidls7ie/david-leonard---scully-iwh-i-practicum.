@@ -89,3 +89,12 @@ p.card__name {
     font-weight: 900;
     margin: 1rem;
 }
+
+
+.main__title {
+    margin: 3rem 1rem;
+}
+
+span.navigation {
+    margin: 3rem 1rem;
+}
