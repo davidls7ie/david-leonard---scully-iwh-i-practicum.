@@ -25,6 +25,8 @@ const PRIVATE_APP_ACCESS = process.env.PRIVATE_ACCESS_TOKEN;
 
 
 app.get('/', async (req, res) => {
+
+  
   const contacts = 'https://api.hubspot.com/crm/v3/objects/contacts';
   const headers = {
       Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
@@ -46,7 +48,7 @@ app.get('/', async (req, res) => {
 // Create a new app.get route for the form to create or update new custom object data. 
 // Send this data along in the next route.
 
-app.get('/update-cobj', (req, res) => {
+app.get('/update-contact', (req, res) => {
     var title = 'Update Custom Object Form | Integrating With HubSpot I Practicum.'
 
     res.render('updates', { 
@@ -71,11 +73,50 @@ app.get('/update-cobj', (req, res) => {
 // or update your custom object data. 
 // Once executed, redirect the user to the homepage.
 // needs async / await, promise to pass data from form to CRM
+
+
+
+// https://api.hubapi.com/crm/v3/objects/2-34405873
+
+// 
+
+app.post('/addservice', async (req, res) => {
+    
+  const { name, marketing_service_name, service_description} = req.body;
+
+  const cobject_data = {
+    
+      "properties": {
+        "name": req.body.name,
+        "marketing_service_name" : req.body.marketing_service_name,
+        "service_description" : req.body.service_description
+      }
+    
+  };
+
+  const headers = {
+    Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+    'Content-Type': 'application/json'
+  };
+
+  // update the query string to take new values - 19:40 
+  try {
+    const response = await axios.post('https://api.hubapi.com/crm/v3/objects/contacts', cobject_data, { headers });
+    res.redirect('/');
+  } catch (error) {
+    console.error('Something went wrong:', error);
+    res.status(500).send('Something went wrong.');
+  }
+});  
+
+
+// For adding Contacts to the CRM 
+
 app.post('/add', async (req, res) => {
     
     const { firstname, lastname, email } = req.body;
   
-    const cobject_data = {
+    const contact_data = {
       properties: {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -90,13 +131,14 @@ app.post('/add', async (req, res) => {
   
     // update the query string to take new values - 19:40 
     try {
-      const response = await axios.post('https://api.hubapi.com/crm/v3/objects/contacts', cobject_data, { headers });
+      const response = await axios.post('https://api.hubapi.com/crm/v3/objects/contacts', contact_data, { headers });
       res.redirect('/');
     } catch (error) {
       console.error('Something went wrong:', error);
       res.status(500).send('Something went wrong.');
     }
-  });    
+  });  
+
 
 // * Localhost
 app.listen(3000, () => console.log('Listening on http://localhost:3000'));
