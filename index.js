@@ -12,6 +12,8 @@ app.use(express.json());
 // globals 
 require('dotenv').config();
 
+const object_type_id = '2-34405873';
+
 // auth key - environment variable
 const PRIVATE_APP_ACCESS = process.env.PRIVATE_ACCESS_TOKEN;
 
@@ -34,18 +36,17 @@ app.get('/', async (req, res) => {
       const data = resp.data.results;
       const object_record_ids = []
       
-      // Push data for each object in to the empty array 
+      // Push ID for each object in to the empty array 
       // - useful for BATCHing but not required here. 
       data.forEach(record => {
         object_record_ids.push(record.id);
       });
       
-      // Empty Array for fetched IDs 
+      // Empty array for fetched IDs to store request URLs
       const object_record_data = []
-      const promise_fetch = []
-      const fetchPromises = []
-      const fetchResults = []
-      const validResults = []
+
+      // An empty array to store the results of passing the URL and auth headers 
+      const fetchPromises = [];
 
 
 
@@ -53,14 +54,40 @@ app.get('/', async (req, res) => {
       for(i=0; i < object_record_ids.length; i++ ){    
         // Create a variable that runs the API with the correct ID and properties
         const request_url_fetch = "https://api.hubapi.com/crm/v3/objects/2-34405873/" + object_record_ids[i] + "?properties=service_description,name,marketing_service_name"
-        // Add the fetch result to the results array 
+        
+    
+        // Add the fetch result to the results the empty array 
         object_record_data.push(request_url_fetch)
-      }
-      
-      console.log(object_record_data)
-      // Render Template 
-      res.render('index', { title: 'Practicum Homepage | HubSpot APIs', data: object_record_data });
+        
+          // Store the fetch promise in the array
+          fetchPromises.push(
+            axios.get(request_url_fetch, { headers })
+                .then(response => response.data)
+                .catch(error => {
+                    console.error('Error fetching data for ID: ' + object_record_ids[i], error);
+                    return null; // Handle or log error as required
+                })
+        );
 
+
+      }
+
+
+    // Wait for all fetch requests to complete
+    const fetchResults = await Promise.all(fetchPromises);    
+    
+    // Filter out any null responses (in case of errors)
+    const validResults = fetchResults.filter(result => result !== null);   
+    
+    // Add non-null results to the object_record_data array
+    object_record_data.push(...validResults);
+    
+
+    console.log("The data fetched for object record ids:", object_record_data);
+
+    res.render('index', { title: 'Practicum Homepage | HubSpot APIs', data: object_record_data });
+
+    console.log(data)
   } catch (error) {
       console.error(error);
   }
