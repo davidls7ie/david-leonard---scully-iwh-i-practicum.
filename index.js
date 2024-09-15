@@ -12,8 +12,6 @@ app.use(express.json());
 // globals 
 require('dotenv').config();
 
-const object_type_id = '2-34405873';
-
 // auth key - environment variable
 const PRIVATE_APP_ACCESS = process.env.PRIVATE_ACCESS_TOKEN;
 
@@ -48,16 +46,12 @@ app.get('/', async (req, res) => {
       // An empty array to store the results of passing the URL and auth headers 
       const fetchPromises = [];
 
-
-
       // loop to grab IDs and run the Axios fetch request
       for(i=0; i < object_record_ids.length; i++ ){    
         // Create a variable that runs the API with the correct ID and properties
         const request_url_fetch = "https://api.hubapi.com/crm/v3/objects/2-34405873/" + object_record_ids[i] + "?properties=service_description,name,marketing_service_name"
         
-    
-        // Add the fetch result to the results the empty array 
-        object_record_data.push(request_url_fetch)
+  
         
           // Store the fetch promise in the array
           fetchPromises.push(

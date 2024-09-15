@@ -13,7 +13,7 @@ h1, h2, h3, h4, h5, h6  {
 
 .cards {
     display: flex;
-    align-items: center;
+    
     justify-content: flex-start;
     flex-wrap: wrap;
 }
@@ -96,5 +96,16 @@ p.card__name {
 }
 
 span.navigation {
+    margin: 3rem 1rem;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2rem;
+    /* padding: 2rem; */
+}
+
+.description {
     margin: 3rem 1rem;
 }

@@ -4,10 +4,12 @@ html
         meta(name="viewport" content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="/css/style.css")
     body
-        h1.main__title Homepage | See custom object records (Honk Honk)
+        h1.main__title Homepage | See custom object records 
         include includes/nav.pug
-        .cards 
+        div.cards 
             each service in data
                 .card 
-                    h2.card__name #{service} 
+                    h1.card__name #{service.properties.marketing_service_name} 
+                        h3.card__name #{service.properties.name} 
+                        p.description #{service.properties.service_description} 
                     
