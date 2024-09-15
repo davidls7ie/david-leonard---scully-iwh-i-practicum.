@@ -39,36 +39,27 @@ app.get('/', async (req, res) => {
       data.forEach(record => {
         object_record_ids.push(record.id);
       });
-      const promise_fetch = []
+      
       // Empty Array for fetched IDs 
       const object_record_data = []
+      const promise_fetch = []
+      const fetchPromises = []
+      const fetchResults = []
+      const validResults = []
+
+
+
       // loop to grab IDs and run the Axios fetch request
       for(i=0; i < object_record_ids.length; i++ ){    
         // Create a variable that runs the API with the correct ID and properties
-        const object_fetch = "https://api.hubapi.com/crm/v3/objects/2-34405873/" + object_record_ids[i] + "?properties=service_description,name,marketing_service_name"
-        
+        const request_url_fetch = "https://api.hubapi.com/crm/v3/objects/2-34405873/" + object_record_ids[i] + "?properties=service_description,name,marketing_service_name"
         // Add the fetch result to the results array 
-        object_record_data.push(object_fetch)
-        // Use Axios to get the URL from Object Fetch 
-        promise_fetch.push(
-          axios.get(object_fetch, { headers })
-              .then(response => response.data,
-              )
-              .catch(error => {
-                  console.error('Error fetching data for ID: ' + object_record_ids[i], error);
-                  return null; // Handle or log error as required
-              }),
-              console.log("Recieved data for " + object_record_ids[i]),
-              console.log(promise_fetch[i]),
-      );
+        object_record_data.push(request_url_fetch)
       }
-      console.log("The completed array with the request URLS")
+      
       console.log(object_record_data)
-      console.log("The completed array with the objects")
-      console.log(promise_fetch[i])
-
-    // Render Template 
-      res.render('index', { title: 'Practicum Homepage | HubSpot APIs', data });     
+      // Render Template 
+      res.render('index', { title: 'Practicum Homepage | HubSpot APIs', data: object_record_data });
 
   } catch (error) {
       console.error(error);
